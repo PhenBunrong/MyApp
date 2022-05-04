@@ -29,8 +29,8 @@
                         <thead>
                             <tr>
                                 <th width="40%">student Name</th>
-                                <th width="40%">Class Name</th>
-                                <th width="20%" class="text-right">Action</th>
+                                <th width="30%">Class Name</th>
+                                <th width="30%" class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,7 +47,7 @@
                                 <td class="text-right">
                                     <a class="btn btn-info" href="{{ route('student.show',$items->id) }}">Show</a>
                                     <a class="btn btn-primary" href="{{ route('student.edit',$items) }}">Edit</a>
-                                    <a class="btn btn-primary" href="{{ route('student_delete',$items->id)}}">Delte</a>
+                                    <a class="btn btn-danger" href="{{ route('student_delete',$items->id)}}">Delete</a>
 
                                     <!-- <button class="btn btn-danger btn-delete"  data-url="{{ route('student.destroy',$items->id)}}" >Delete</button> -->
                                 </td>

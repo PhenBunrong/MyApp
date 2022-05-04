@@ -71,7 +71,8 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        return view('admin.teacher.edit', compact('teacher'));
+        $cls = Classes::all();
+        return view('admin.teacher.edit', compact('teacher','cls'));
     }
 
     /**
@@ -93,6 +94,7 @@ class TeacherController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
+        $teacher->class()->sync($request->cls);
         
         if(!$teacher->save()){
             return redirect()->back()->with('error', 'Sorry, there\' a problem while updating teacher.');

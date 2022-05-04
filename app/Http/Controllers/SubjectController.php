@@ -42,14 +42,13 @@ class SubjectController extends Controller
         
         $this->validate($request, [
             'name' => ['required'],
-            'class_id' => ['required'],
         ]);
 
         $subject = new Subject();
         $subject->name = $request->name;
-        $subject->class_id = $request->class_id;
         $subject->save();
 
+        $subject->class()->attach($request->cls);
 
         if(!$subject->save()){
             return redirect()->back()->with('error', 'Sorry, there\' a problem while updating subject.');
@@ -98,6 +97,8 @@ class SubjectController extends Controller
             'name' => ['required'],
             'class_id' => ['required'],
         ]);
+
+        $subject->class()->sync($request->cls);
 
         if(!$subject->save()){
             return redirect()->back()->with('error', 'Sorry, there\' a problem while updating categoriess.');

@@ -28,14 +28,26 @@
                     <table id="table_id" class="display">
                         <thead>
                             <tr>
-                                <th width="40%">class Name</th>
-                                <th width="20%" class="text-right">Action</th>
+                                <th width="20%">Class Name</th>
+                                <th width="20%">Teacher Name</th>
+                                <th width="20%">Subject Name</th>
+                                <th width="40%" class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                         @foreach($class as $items)
                             <tr>
                                 <td>{{$items->name}}</td>
+                                <td>
+                                    <ul>
+                                        @foreach ($items->teachers as $teach)
+                                            <li>{{ $teach->name }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                <td>
+                                    <!--  -->
+                                </td>
                                 <td class="text-right">
                                     <a class="btn btn-info" href="{{ route('class.show',$items->id) }}">Show</a>
                                     <a class="btn btn-primary" href="{{ route('class.edit',$items->id) }}">Edit</a>

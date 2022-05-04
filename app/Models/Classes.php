@@ -11,5 +11,13 @@ class Classes extends Model
 
     protected $fillable = ['name'];
 
-    
+    // public function subj(){
+    //     return $this->hasMany(Subject::class,'class_id','id');
+    // }
+    // public function student(){
+    //     return $this->hasMany(Student::class,'class_id','id');
+    // }
+    public function teachers(){
+        return $this->belongsToMany(Teacher::class,'class_teachers','class_id','teacher_id');
+    } 
 }

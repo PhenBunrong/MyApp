@@ -36,6 +36,14 @@
                 <label for="exampleInputEmail1">Name teacher</label>
                 <input type="text" name="name" class="form-control" value="{{ $teacher->name }}" id="exampleInputEmail1" placeholder="Enter Name">
             </div>
+            <div class="form-group">
+                <label for="name">Name Teacher</label>
+                <select name="cls[]" id="" class="form-control mt-1" multiple>
+                    @foreach ($cls as $item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>

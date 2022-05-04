@@ -36,7 +36,7 @@
             </div>
             <div class="form-group">
                 <label>Select Class</label>
-                <select name="class_id" class="form-control" id="class_id">
+                <select name="cls[]" class="form-control" id="class_id" multiple>
                     @foreach ($class as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach

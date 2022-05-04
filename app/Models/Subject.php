@@ -9,9 +9,9 @@ class Subject extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','class_id'];
+    protected $fillable = ['name'];
 
     public function class(){
-        return $this->hasMany(Classes::class, 'id','class_id');
+        return $this->belongsToMany(Classes::class, 'subject_class','class_id','subject_id');
     }
 }
