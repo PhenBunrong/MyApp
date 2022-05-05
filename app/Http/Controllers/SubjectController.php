@@ -27,8 +27,8 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        $class = Classes::get();
-        return view('admin.subject.create', compact('class'));
+        $cls = Classes::get();
+        return view('admin.subject.create', compact('cls'));
     }
 
     /**
@@ -40,15 +40,15 @@ class SubjectController extends Controller
     public function store(Request $request)
     {
         
-        $this->validate($request, [
-            'name' => ['required'],
+        $request->validate([
+            'name' => 'required',
         ]);
 
-        $subject = new Subject();
-        $subject->name = $request->name;
-        $subject->save();
+        $subject = Subject::create([
+            'name' => $request->name,
+        ]);
 
-        $subject->class()->attach($request->cls);
+        $subject->classes()->attach($request->cls);
 
         if(!$subject->save()){
             return redirect()->back()->with('error', 'Sorry, there\' a problem while updating subject.');
@@ -75,8 +75,8 @@ class SubjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        $class = Classes::get();
-        return view('admin.subject.edit', compact('subject','class'));
+        $cls = Classes::get();
+        return view('admin.subject.edit', compact('subject','cls'));
     }
 
     /**
@@ -89,21 +89,19 @@ class SubjectController extends Controller
     public function update(Request $request,$id)
     {
         $subject = Subject::find($id);
-        
+
         $subject->name = $request->name;
-        $subject->class_id = $request->class_id;
 
         $this->validate($request, [
-            'name' => ['required'],
-            'class_id' => ['required'],
+            'name' => 'required|string|max:255',
         ]);
 
-        $subject->class()->sync($request->cls);
-
+        $subject->classes()->sync($request->cls);
+        
         if(!$subject->save()){
-            return redirect()->back()->with('error', 'Sorry, there\' a problem while updating categoriess.');
+            return redirect()->back()->with('error', 'Sorry, there\' a problem while updating subject.');
         }
-        return redirect()->route('subject.index')->with('success', 'Success, your categoriess have been updated.');
+        return redirect()->route('subject.index')->with('success', 'Success, your subject have been updated.');
     }
 
     /**
@@ -112,20 +110,23 @@ class SubjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        // $data = Subject::find($id);
-        // $data->delete();
-        
-        // return redirect()->route('subject.index')
-        //                ->with('success','post deleted successfully');
+        // dd($request->id);
+        Subject::find($request->id)->delete();
+
+        return response()->json([]);
+
+        // return redirect()->back()->with('success','Subject deleted successfully');
     }
-    public function delete($id)
-    {
-        $data = Subject::find($id);
-        $data->delete();
+
+    // public function delete($id)
+    // {
+    //     dd($id);
+    //     // $data = Subject::find($id);
+    //     // $data->delete();
         
-        return redirect()->back()
-                       ->with('success','post deleted successfully');
-    }
+    //     // return redirect()->back()
+    //     //                ->with('success','post deleted successfully');
+    // }
 }

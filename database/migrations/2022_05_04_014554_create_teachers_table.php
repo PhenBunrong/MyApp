@@ -15,7 +15,20 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('email')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->string('slug',100)->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('teachers_subject', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('class_id');
+            $table->bigInteger('subject_id');
             $table->timestamps();
         });
     }
@@ -28,5 +41,6 @@ class CreateTeachersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('teachers');
+        Schema::dropIfExists('teachers_subject');
     }
 }

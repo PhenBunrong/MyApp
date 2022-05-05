@@ -28,9 +28,12 @@
                     <table id="table_id" class="display">
                         <thead>
                             <tr>
-                                <th width="40%">student Name</th>
-                                <th width="30%">Class Name</th>
-                                <th width="30%" class="text-right">Action</th>
+                                <th>Student Name</th>
+                                <th>Class Name</th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                                <th>Date Of Birth</th>
+                                <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,6 +47,9 @@
                                         @endforeach
                                     </ul>
                                 </td>
+                                <td>{{$items->address}}</td>
+                                <td>{{$items->phone}}</td>
+                                <td>{{$items->db}}</td>
                                 <td class="text-right">
                                     <a class="btn btn-info" href="{{ route('student.show',$items->id) }}">Show</a>
                                     <a class="btn btn-primary" href="{{ route('student.edit',$items) }}">Edit</a>
@@ -61,3 +67,7 @@
     </section>
 
 @endsection
+
+<script>
+    
+</script>

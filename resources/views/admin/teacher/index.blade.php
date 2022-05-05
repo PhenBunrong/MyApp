@@ -28,9 +28,12 @@
                     <table id="table_id" class="display">
                         <thead>
                             <tr>
-                                <th width="40%">Teacher Name</th>
-                                <th width="30%">Class Name</th>
-                                <th width="30%" class="text-right">Action</th>
+                                <th>Teacher Name</th>
+                                <th>Class Name</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,15 +42,18 @@
                                 <td>{{$items->name}}</td>
                                 <td>
                                     <ul>
-                                        @foreach ($items->class as $cls)
+                                        @foreach ($items->classes as $cls)
                                             <li>{{ $cls->name }}</li>
                                         @endforeach
                                     </ul>
                                 </td>
+                                <td>{{$items->phone}}</td>
+                                <td>{{$items->address}}</td>
+                                <td>{{$items->email}}</td>
                                 <td class="text-right">
                                     <a class="btn btn-info" href="{{ route('teacher.show',$items->id) }}">Show</a>
                                     <a class="btn btn-primary" href="{{ route('teacher.edit',$items->id) }}">Edit</a>
-                                    <a class="btn btn-danger" href="{{ route('teacher_destroy',$items->id) }}">Delete</a>
+                                    <a class="btn btn-danger btn_delete" value="{{$items->id}}" data-id="{{$items->id}}">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -59,3 +65,33 @@
     </section>
 
 @endsection
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.btn_delete').on('click',function(e){
+            e.preventDefault();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: "DELETE",
+                url: "/teacher/delete",
+                data: {
+                    id : $(this).data('id')
+                },
+                success: function (response) {
+                    $(this).parents('tr').remove();
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'data deleted'
+                    })
+                }
+            });
+        })
+    })
+</script>

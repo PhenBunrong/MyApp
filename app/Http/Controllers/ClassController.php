@@ -15,7 +15,6 @@ class ClassController extends Controller
     public function index()
     {
         $class = Classes::get();
-
         return view('admin.class.index',compact('class'));
     }
 

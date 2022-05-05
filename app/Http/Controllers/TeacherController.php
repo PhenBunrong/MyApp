@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classes;
 use App\Models\Teacher;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -41,15 +42,29 @@ class TeacherController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'email' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
         ]);
 
-        $teacher = Teacher::create([
-            'name' => $request->name,
-        ]);
+        $teacher = new Teacher();
+        $teacher->name = $request->name;
+        $teacher->phone = $request->phone;
+        $teacher->address = $request->address;
+        $teacher->email = $request->email;
+        $teacher->start_date = $request->start_date;
+        $teacher->end_date = $request->end_date;
+        $teacher->slug = Str::slug($request->name);
+        $teacher->save();
 
-        $teacher->class()->attach($request->cls);
+        $teacher->classes()->attach($request->cls);
 
-        return redirect()->route('teacher.index')->with('success','Teacher created successfully.');
+        if(!$teacher->save()){
+            return redirect()->back()->with('error', 'Sorry, there\' a problem while updating subject.');
+        }
+        return redirect()->route('teacher.index')->with('success', 'Success, your subject have been updated.');
     }
 
     /**
@@ -89,12 +104,22 @@ class TeacherController extends Controller
         $teacher = Teacher::find($id);
 
         $teacher->name = $request->name;
+        $teacher->phone = $request->phone;
+        $teacher->address = $request->address;
+        $teacher->email = $request->email;
+        $teacher->start_date = $request->start_date;
+        $teacher->end_date = $request->end_date;
 
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'email' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
         ]);
 
-        $teacher->class()->sync($request->cls);
+        $teacher->classes()->sync($request->cls);
         
         if(!$teacher->save()){
             return redirect()->back()->with('error', 'Sorry, there\' a problem while updating teacher.');
@@ -109,20 +134,19 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Teacher $teacher)
+    public function destroy(Request $request)
     {
-    //   $teacher->delete();
+       Teacher::find($request->id)->delete();
 
-    //    return redirect()->route('teacher.index')
-    //                    ->with('success','teacher deleted successfully');
+       return response()->json([]);
     }
 
-    public function delete($id)
-    {
-        $data = Teacher::find($id);
-        $data->delete();
+    // public function delete($id)
+    // {
+    //     $data = Teacher::find($id);
+    //     $data->delete();
         
-        return redirect()->back()
-                       ->with('success','post deleted successfully');
-    }
+    //     return redirect()->back()
+    //                    ->with('success','post deleted successfully');
+    // }
 }

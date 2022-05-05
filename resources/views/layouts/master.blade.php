@@ -23,19 +23,26 @@
 <link rel="stylesheet" href="{{asset('admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
 <link rel="stylesheet" href="{{asset('admin/plugins/daterangepicker/daterangepicker.css')}}">
 <link rel="stylesheet" href="{{asset('admin/plugins/summernote/summernote-bs4.min.css')}}">
+<link rel="stylesheet" href="{{asset('admin/plugins/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
 
+<!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
+
+<link rel="stylesheet" href="../../">
+<link rel="stylesheet" href="../../">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-<div class="preloader flex-column justify-content-center align-items-center">
-<img class="animation__shake" src="{{asset('admin/dist/img/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60" width="60">
-</div>
+    <!-- <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="{{asset('admin/dist/img/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60" width="60">
+    </div> -->
 
-@include('admin.navbar.navbar')
+@include('admin.include.navbar')
 
-@include('admin.sidebar.sidebar')
+@include('admin.include.sidebar')
+@include('admin.include.alert')
 
 
 <div class="content-wrapper">
@@ -76,8 +83,6 @@ All rights reserved.
 <script src="{{asset('admin/plugins/sparklines/sparkline.js')}}"></script>
 
 
-<!-- <script src="{{asset('admin/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script> -->
-
 <script src="{{asset('admin/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
 
 <script src="{{asset('admin/plugins/moment/moment.min.js')}}"></script>
@@ -93,11 +98,15 @@ All rights reserved.
 
 <!-- <script src="{{asset('admin/dist/js/demo.js')}}"></script> -->
 
-<script src="{{asset('admin/dist/js/pages/dashboard.js')}}"></script>
+{{-- <script src="{{asset('admin/dist/js/pages/dashboard.js')}}"></script> --}}
 
 
 <script src="{{asset('admin/dist/js/jquery.dataTables.min.js')}}"></script>
 
+<script src="{{asset('admin/plugins/select2/js/select2.full.min.js')}}"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+
+@yield('js')
 <script>
     $(document).ready( function () {
         $('#table_id').DataTable();

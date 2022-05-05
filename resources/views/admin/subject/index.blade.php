@@ -35,11 +35,11 @@
                         </thead>
                         <tbody>
                         @foreach($subject as $items)
-                            <tr>
+                            <tr id="todo_{{$items->id}}">
                                 <td>{{$items->name}}</td>
                                 <td>
                                     <ul>
-                                        @foreach($items->class as $cls)
+                                        @foreach($items->classes as $cls)
                                             <li>{{$cls->name}}</li>
                                         @endforeach
                                     </ul>
@@ -47,9 +47,8 @@
                                 <td class="text-right">
                                     <a class="btn btn-info" href="{{ route('subject.show',$items->id) }}">Show</a>
                                     <a class="btn btn-primary" href="{{ route('subject.edit',$items) }}">Edit</a>
-                                    <a class="btn btn-danger" href="{{ route('subject_delete',$items->id)}}">Delete</a>
+                                    <a class="btn btn-danger btn_deleted" data-id="{{ $items->id}}" value="{{ $items->id}}">Delete</a>
 
-                                    <!-- <button class="btn btn-danger btn-delete"  data-url="{{ route('subject.destroy',$items->id)}}" >Delete</button> -->
                                 </td>
                             </tr>
                         @endforeach
@@ -61,3 +60,37 @@
     </section>
 
 @endsection
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function() {
+        $("tbody").on('click','.btn_deleted',function(e){
+            e.preventDefault();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+                
+            let id = $(this).data('id');
+            // let token   = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                type: "delete",
+                url: "/subject/delete",
+                data: {
+                    // _token: token,
+                    id : id
+                },
+                success: (res)=> {
+                    console.log(res);
+                    $(this).parents('tr').remove();
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'data deleted'
+                    })
+                }
+            });
+        });
+    })
+</script>

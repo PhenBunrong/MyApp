@@ -38,9 +38,9 @@
             </div>
             <div class="form-group">
                 <label>Select Class</label>
-                <select name="class_id" class="form-control" id="class_id">
-                    @foreach ($class as $item)
-                        <option value="{{ old('class_id', $item->id)}}">{{ $item->name }}</option>
+                <select name="cls[]" class="form-control" id="select2-multiple" multiple>
+                    @foreach ($cls as $item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -51,4 +51,17 @@
     </form>
 </section>
     
+<style>
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        color: #aaa;
+    }
+</style>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('#select2-multiple').select2();
+        });
+    </script>
 @endsection

@@ -42,11 +42,17 @@ class StudentController extends Controller
         
         $this->validate($request, [
             'name' => ['required'],
+            'phone' => ['required'],
+            'address' => ['required'],
+            'db' => ['required'],
             'class_id' => ['required'],
         ]);
 
         $student = new Student();
         $student->name = $request->name;
+        $student->phone = $request->phone;
+        $student->address = $request->address;
+        $student->db = $request->db;
         $student->class_id = $request->class_id;
         $student->save();
 
@@ -92,12 +98,19 @@ class StudentController extends Controller
         $student = Student::find($id);
         
         $student->name = $request->name;
+        $student->phone = $request->phone;
+        $student->address = $request->address;
+        $student->db = $request->db;
         $student->class_id = $request->class_id;
 
         $this->validate($request, [
             'name' => ['required'],
+            'phone' => ['required'],
+            'address' => ['required'],
+            'db' => ['required'],
             'class_id' => ['required'],
         ]);
+
 
         if(!$student->save()){
             return redirect()->back()->with('error', 'Sorry, there\' a problem while updating categoriess.');

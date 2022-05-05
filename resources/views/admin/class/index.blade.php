@@ -46,7 +46,11 @@
                                     </ul>
                                 </td>
                                 <td>
-                                    <!--  -->
+                                    <ul>
+                                        @foreach($items->subj as $sub)
+                                            <li>{{ $sub->name }}</li>
+                                        @endforeach
+                                    </ul>
                                 </td>
                                 <td class="text-right">
                                     <a class="btn btn-info" href="{{ route('class.show',$items->id) }}">Show</a>

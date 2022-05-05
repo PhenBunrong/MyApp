@@ -21,28 +21,51 @@
 <div class="container-fluid">
 <div class="row">
 
-<div class="col-md-6">
+<div class="col-md-12">
 
 <div class="card card-primary">
     <div class="card-header">
         <h3 class="card-title">Form Student</h3>
     </div>
-    <form method="POST" action="{{route('student.store')}}" enctype="multipart/form-data">
+    <form method="POST" class="insert_form" action="{{route('student.store')}}" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
-            <div class="form-group">
-                <label for="name">Name Student</label>
-                <input type="text" name="name" class="form-control" id="name" placeholder="Enter Name">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="name">Name Student</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Enter Name">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter Phone">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" name="address" class="form-control" id="address" placeholder="Enter Address">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="db">Date of Birth</label>
+                        <input type="date" name="db" class="form-control" id="db">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Select Class</label>
+                        <select name="class_id" class="form-control" id="class_id">
+                            @foreach ($class as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Select Class</label>
-                <select name="class_id" class="form-control" id="class_id">
-                    @foreach ($class as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
